@@ -1,0 +1,619 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+:root {
+  --brand-color: #1b1918;
+  --brand-color-hover: #000000;
+  --base-color: #ffffff;
+  --surface-color: #eff2f9;
+  --surface-border-color: #2c2c2c;
+  --text-color: #191b23;
+  --secondary-text-color: #3c404f;
+  --base-transparent-90: rgba(247, 247, 247, 0.9);
+  --base-transparent-100: rgb(223, 223, 223);
+}
+
+.dark-theme {
+  --brand-color: #626262;
+  --base-color: #1e1f26;
+  --surface-color: #2c2f38;
+  --text-color: #f0f0f0;
+  --secondary-text-color: #b0b3c0;
+  --base-transparent-90: rgba(80, 83, 100, 0.9);
+  /* --base-transparent-100: rgba(30, 31, 38, 1); */
+  --base-transparent-100: rgb(40, 42, 51);
+}
+
+.dark-theme svg {
+  fill: #fff;
+}
+
+
+/* ===== BASE TRANSITIONS ===== */
+body,
+header,
+.note-card,
+button,
+input,
+textarea,
+.dialog,
+.search-container,
+.empty-state,
+.dropdown-menu {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  /* Опционально - для производительности */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+
+}
+
+body {
+  font-family: Inter, sans-serif;
+  margin: 1.5rem 2rem;
+  background: var(--base-color);
+  color: var(--text-color);
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--base-color);
+  padding: 0.5rem 0;
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+#pageTitle {
+  min-width: 200px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.page-title-hidden {
+  display: none;
+}
+
+#headerInner {
+  display: flex;
+  position: relative;
+  gap: 1rem;
+}
+
+#headerInner form {
+  margin-right: 1rem;
+}
+
+.search-container {
+  position: relative;
+}
+
+#searchField {
+  border: 1px solid var(--surface-border-color);
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  padding: 0.9rem 2.5rem 0.9rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: box-shadow 0.5s ease;
+  width: 500px;
+}
+
+#searchField:hover {
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+#searchField:focus {
+  outline: none;
+}
+
+
+#searchToggleBtn {
+  position: absolute;
+  background: none;
+  /* cursor: pointer; */
+  pointer-events: none;
+  border: none;
+  z-index: 111111;
+  top: 0.75rem;
+  left: 1.5rem;
+  display: none;
+}
+
+#clearSearchBtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s;
+
+}
+
+
+/* Дополнительно: показывать кнопку когда поле в фокусе */
+#searchField:focus~#clearSearchBtn {
+  opacity: 1;
+  visibility: visible;
+}
+
+.add-note-btn {
+  display: flex;
+  align-items: center;
+  background: var(--brand-color);
+  color: white;
+  border: 1px solid var(--surface-border-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.add-note-btn svg {
+  fill: currentColor;
+}
+
+.add-note-btn-hidden {
+  display: none;
+}
+
+.add-note-btn:hover {
+  background: var(--brand-color-hover);
+}
+
+.theme-toggle-btn {
+  background: var(--surface-color);
+  color: var(--text-color);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: 1rem;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--brand-color);
+  color: white;
+}
+
+
+.button {
+  display: flex;
+  align-items: center;
+  background: var(--surface-color);
+  border: 1px solid var(--surface-border-color);
+  color: var(--text-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.dark-theme .button {
+  background: var(--base-color);
+
+}
+
+
+.button:hover {
+  background: var(--brand-color);
+  color: white;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.button svg {
+  shape-rendering: geometricPrecision;
+  transform: translateZ(0);
+  filter: blur(0);
+  -webkit-font-smoothing: antialiased;
+}
+
+.button:hover svg {
+  fill: currentColor;
+
+}
+
+.notes-grid {
+
+  /* Количество колонок */
+  column-count: 4;
+
+  /* Отступ колонок */
+  column-gap: 16px;
+
+  padding: 8px;
+
+}
+
+#notesContainer,
+#trashContainer {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease-out,
+    transform 0.3s ease-out;
+
+  
+}
+
+/* Состояние во время анимации */
+body.transitioning #notesContainer,
+body.transitioning #trashContainer {
+  opacity: 0;
+}
+
+
+.note-card {
+  background: var(--surface-color);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 2px solid var(--surface-border-color);
+  transition: transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border 0.3s ease;
+  position: relative;
+
+
+  display: inline-block; /* Important without it won't work */
+
+  width: 100%;
+  margin-bottom: 16px;
+  break-inside: avoid; /* Чтобы карточки не обрывались */
+
+  border-radius: 8px;
+}
+
+.note-card:hover {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
+}
+
+.dark-theme .note-card:hover {
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.852),
+    0 0 10px rgb(137, 137, 137);
+
+}
+
+
+.note-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--text-color);
+  word-wrap: break-word;
+}
+
+.note-content {
+  color: var(--secondary-text-color);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  height: fit-content;
+
+}
+
+.note-actions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.note-card:hover .note-actions {
+  opacity: 1;
+  visibility: visible;
+}
+
+.edit-btn,
+.delete-btn,
+.undo-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease,
+    transform 0.2s ease;
+  backdrop-filter: blur(10px);
+  background: var(--base-transparent-90);
+  color: var(--text-color);
+  border: 1px solid var(--surface-color);
+}
+
+.delete-btn:hover {
+  background: #ff5252;
+  transform: scale(1.05);
+  color: white;
+}
+
+.undo-btn:hover {
+  background: #35a1ff;
+  transform: scale(1.05);
+  color: white;
+}
+
+dialog {
+  margin: auto;
+  inset: 0;
+  border: none;
+  border-radius: 1rem;
+  padding: 0;
+  background: var(--surface-color);
+  color: var(--text-color);
+  max-width: 500px;
+  width: 90vw;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+}
+
+.dialog-content {
+  padding: 2rem;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.dialog-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+
+#deleteDialog .dialog-header {
+  margin-bottom: 0;
+}
+
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--secondary-text-color);
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: background 0.2s ease;
+}
+
+.close-btn:hover {
+  background: var(--surface-color);
+  visibility: visible;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--surface-color);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+  background: var(--base-color);
+  color: var(--text-color);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--brand-color);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.cancel-btn,
+.save-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.cancel-btn {
+  background: var(--base-color);
+  color: var(--text-color);
+}
+
+.save-btn {
+  background: var(--brand-color);
+  color: white;
+}
+
+.save-btn:hover {
+  background: var(--brand-color-hover)
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--secondary-text-color);
+  display: inline-block;
+  width: 100%;
+}
+
+.empty-state h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.empty-state p {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.empty-state button {
+  margin: 0 auto;
+}
+
+/* Toast message */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+
+  pointer-events: none;
+  padding: 15px 20px;
+  background: #333;
+  color: white;
+  border-radius: 8px;
+  z-index: 1000;
+  opacity: 0;
+  transition: transform 0.3s ease,
+    opacity 0.3s ease;
+  max-width: 300px;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+
+.toast.success {
+  background: #2ed573;
+}
+
+.toast.error {
+  background: #ff4757;
+}
+
+.toast.warning {
+  background: #ffa502;
+}
+
+.toast.info {
+  background: var(--brand-color);
+}
+
+/* dropdown menu */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  margin-top: 10px;
+  top: 100%;
+  right: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: visibility 0.3s ease-out,
+    transform 0.3s ease-out;
+  z-index: 1000;
+
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px;
+  border-radius: 15px;
+
+  background: rgba(255, 255, 255, 0.19);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4.6px);
+  -webkit-backdrop-filter: blur(4.6px);
+
+  gap: 5px;
+}
+
+.dropdown-menu button {
+  margin-left: 0;
+}
+
+.dropdown-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  z-index: 1000;
+
+}
+
+.dropdown-menu .theme-toggle-btn,
+.dropdown-menu .trash-btn {
+  display: none;
+}
+
+.transitioning {
+  transition: opacity 0.5s ease;
+}
+
+
+
+.portfolio-footer {
+  margin-top: auto;
+  border-top: 2px solid var(--surface-color);
+  padding-top: 1rem;
+}

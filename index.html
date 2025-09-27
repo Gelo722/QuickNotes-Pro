@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Notes</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/media.css">
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <!-- JS Modules -->
+    <script type="module" src="/js/app.js" defer></script>
+    <script type="module" src="/js/ui.js" defer></script>
+    <script type="module" src="/js/utils.js" defer></script>
+    <script type="module" src="/js/storage.js" defer></script>
+    <script type="module" src="/js/notes-manager.js" defer></script>
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1 id="pageTitle">
+            My Notes
+        </h1>
+
+        <form class="search-container">
+            <div id="searchToggleBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#1f1f1f">
+                    <path
+                        d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+                </svg>
+            </div>
+            <input id="searchField" type="text" placeholder="Search Notes">
+            <button type="button" id="clearSearchBtn" class="clear-search-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
+                    fill="#191b23">
+                    <path
+                        d="M291-267.69 267.69-291l189-189-189-189L291-692.31l189 189 189-189L692.31-669l-189 189 189 189L669-267.69l-189-189-189 189Z" />
+                </svg>
+            </button>
+        </form>
+
+        <div id="headerInner">
+
+
+
+            <button id="addBtn" class="add-note-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
+                    fill="#1f1f1f">
+                    <path d="M421-421H206v-118h215v-215h118v215h215v118H539v215H421v-215Z" />
+                </svg>
+                <span>Add Note</span>
+            </button>
+
+            <button class="button theme-toggle-btn" title="Change Theme">
+                <svg class="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                    width="24px" fill="#1f1f1f">
+                    <path
+                        d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20 3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z" />
+                </svg>
+            </button>
+
+            <button class="button trash-btn" title="Trash">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#1f1f1f">
+                    <path
+                        d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                </svg>
+            </button>
+
+
+            <div id="dropdown" class="dropdown">
+
+                <button id="settingsBtn" class="button" title="Settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#1f1f1f">
+                        <path
+                            d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" />
+                    </svg>
+                </button>
+
+                <div class="dropdown-menu">
+                    <button id="exportNotesBtn" class="button dropdown-item" title="Export">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#1f1f1f">
+                            <path
+                                d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
+                        </svg>
+
+                        Export
+                    </button>
+                    <!-- Загрузка -->
+                    <button id="importNotesBtn" class="button dropdown-item" title="Import">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#1f1f1f">
+                            <path
+                                d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
+                        </svg>
+                        Import
+                        <input id="fileInput" type="file" style="display:none;" accept=".json" />
+                    </button>
+
+                    <button class="button theme-toggle-btn" title="Change Theme">
+                        <svg class="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" height="24px"
+                            viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
+                            <path
+                                d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20 3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z" />
+                        </svg>
+                        <span>Mode</span>
+                    </button>
+                    <button class="button trash-btn" title="Trash">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#1f1f1f">
+                            <path
+                                d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+
+                        </svg>
+                        Trash
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+
+    </header>
+
+    <!-- Notes -->
+    <main id="notesContainer" class="notes-grid">
+
+    </main>
+
+    <!-- Trash -->
+    <div id="trashContainer" class="notes-grid" hidden>
+
+    </div>
+
+    <dialog id="noteDialog">
+        <div class="dialog-content">
+            <div class="dialog-header">
+                <h2 class="dialog-title" id="dialogTitle">Add New Note</h2>
+                <button id="closeBtn" class="delete-btn" title="Delete Note">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
+                        fill="#191b23">
+                        <path
+                            d="M291-267.69 267.69-291l189-189-189-189L291-692.31l189 189 189-189L692.31-669l-189 189 189 189L669-267.69l-189-189-189 189Z" />
+                    </svg>
+                </button>
+            </div>
+            <form id="noteForm">
+                <div class="form-group">
+                    <label for="noteTite" class="form-label">Title</label>
+                    <input type="text" id="noteTitle" class="form-input" placeholder="Enter note title...">
+                </div>
+
+                <div class="form-group">
+                    <label for="noteContent" class="form-label">Content</label>
+                    <textarea id="noteContent" class="form-textarea" placeholder="Write your note here..."></textarea>
+                </div>
+
+                <div class="dialog-actions">
+                    <button id="cancelBtn" type="button" class="cancel-btn">Cancel</button>
+                    <button type="submit" id="saveBtn" class="save-btn">Save Note</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <dialog id="deleteDialog">
+        <div class="dialog-content">
+            <div class="dialog-header">
+                <h2 class="dialog-title" id="dialogTitle">Delete Completely?</h2>
+                <button id="deleteCompletelyBtn" class="button">Yes</button>
+                <button id="cancelDelete" class="add-note-btn">No</button>
+            </div>
+        </div>
+    </dialog>
+
+    <div id="toast" class="toast"></div>
+
+
+    <footer class="portfolio-footer">
+        <p>Developed by
+            <a href="https://github.com/Gelo722" target="_blank" rel="noopener">
+                Oleg Arkhangelskii
+            </a>
+        </p>
+        <p>in 2025</p>
+    </footer>
+
+</body>
+
+</html>

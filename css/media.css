@@ -1,0 +1,160 @@
+/* Small Desktop <= 1439px */
+@media (max-width: 1439px) {}
+
+/* Laptop <= 1279px */
+@media (max-width: 1279px) {
+
+    #headerInner>.trash-btn {
+        display: none;
+    }
+
+    .dropdown-menu .trash-btn {
+        display: flex;
+    }
+
+}
+
+@media (max-width: 1095px) {
+    #headerInner>.theme-toggle-btn {
+        display: none;
+    }
+
+    .dropdown-menu .theme-toggle-btn {
+        display: flex;
+    }
+
+    .button {
+        gap: 3px;
+    }
+
+    ;
+}
+
+/* Tablet <= 1023px */
+@media (max-width: 1023px) {
+
+    header {
+        padding: 1rem 0;
+    }
+
+    #searchField {
+        width: 400px;
+    }
+
+}
+
+@media (max-width: 895px) {
+    #searchField {
+        width: 300px;
+    }
+}
+
+@media (max-width: 800px) {
+    #pageTitle {
+        min-width: 150px;
+        font-size: x-large;
+    }
+}
+
+/* Mobile - до 767px */
+@media (max-width: 767px) {
+    .notes-grid {
+        column-count: 3;
+    }
+
+    #addBtn.add-note-btn span {
+        display: none;
+    }
+
+    #searchField {
+        width: 200px;
+    }
+
+    .note-card .note-actions {
+        visibility: visible;
+        opacity: 1;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+    .notes-grid {
+        column-count: 2;
+    }
+
+    #searchField {
+        width: 150px;
+    }
+
+
+}
+
+@media (max-width: 500px) {
+    header {
+        gap: 1rem;
+    }
+
+    #pageTitle {
+        min-width: 150px;
+        font-size: large;
+    }
+
+
+
+
+}
+
+/* Small Mobile <= 479px */
+@media (max-width: 479px) {
+
+    .notes-grid {
+        column-count: 1;
+    }
+
+    header {
+        justify-content: space-between;
+    }
+
+    #pageTitle {
+        min-width: fit-content;
+    }
+
+    #searchField {
+        width: 73px;
+        transition: width 0.3s ease-in-out;
+    }
+
+    #searchField:focus-within {
+        width: 100%;
+    }
+
+    #searchField:focus-within::placeholder {
+        color: #757575;
+    }
+
+    #searchField::placeholder {
+        color: transparent;
+    }
+
+    #searchToggleBtn {
+        display: block;
+    }
+
+    .search-container:focus-within #searchToggleBtn {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+}
+
+@media (max-width: 400px) {
+    body {
+        margin: 1rem;
+    }
+
+    #pageTitle {
+        display: none;
+    }
+
+}
