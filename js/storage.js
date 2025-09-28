@@ -1,4 +1,4 @@
-import { state } from '/js/notes-manager.js';
+import { state } from './notes-manager.js';
 
 // Загрузка заметок
 function loadNotes() {

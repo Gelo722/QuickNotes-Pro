@@ -1,9 +1,9 @@
 // imports
 
-import { loadNotes, saveNotes, loadTrash, saveTrash, toggleTheme, applyStoredTheme } from '/js/storage.js';
-import { renderNotes, openNoteDialog, closeNoteDialog, closeDeleteDialog, renderTrash, toggleDropdown, handleSearchFocus, handleSearchBlur } from '/js/ui.js';
-import { generateId } from '/js/utils.js';
-import { state, saveNote, deleteNote, restoreNote, showDeleteDialog, deleteTrash, exportNotes, importNotes, openTrashBin, searchNotes, clearSearch } from '/js/notes-manager.js';
+import { loadNotes, saveNotes, loadTrash, saveTrash, toggleTheme, applyStoredTheme } from './storage.js';
+import { renderNotes, openNoteDialog, closeNoteDialog, closeDeleteDialog, renderTrash, toggleDropdown, handleSearchFocus, handleSearchBlur } from './ui.js';
+import { generateId } from './utils.js';
+import { state, saveNote, deleteNote, restoreNote, showDeleteDialog, deleteTrash, exportNotes, importNotes, openTrashBin, searchNotes, clearSearch } from './notes-manager.js';
 
 // ========== Инициализация ==========
 // После загрузки страницы

@@ -1,7 +1,7 @@
-import { generateId } from "/js/utils.js";
-import { closeNoteDialog } from "/js/ui.js";
-import { saveNotes, saveTrash } from "/js/storage.js";
-import { renderNotes, renderTrash, showToast, animateTransition, updateTrashButtons } from "/js/ui.js"
+import { generateId } from "./utils.js";
+import { closeNoteDialog } from "./ui.js";
+import { saveNotes, saveTrash } from "./storage.js";
+import { renderNotes, renderTrash, showToast, animateTransition, updateTrashButtons } from "./ui.js"
 
 
 // ========== Глобальные переменные ==========
