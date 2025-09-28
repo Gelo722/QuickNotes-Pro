@@ -37,6 +37,9 @@ Modern, responsive note-taking web application with minimalist design.
 - **Storage**: Browser LocalStorage API
 - **Architecture**: Modular approach, SPA
 
+## 🚀 Live Demo
+[View Live Demo](https://gelo722.github.io/QuickNotes-Pro/) 
+
 ## 📦 Installation
 
 1. Clone the repository:
