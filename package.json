@@ -1,0 +1,23 @@
+{
+  "name": "quicknotes-pro",
+  "version": "1.0.0",
+  "description": "Modern, responsive note-taking web application with minimalist design.",
+  "homepage": "https://github.com/Gelo722/QuickNotes-Pro#readme",
+  "bugs": {
+    "url": "https://github.com/Gelo722/QuickNotes-Pro/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gelo722/QuickNotes-Pro.git"
+  },
+  "license": "MIT",
+  "author": "Oleg Arkhangelskii",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
