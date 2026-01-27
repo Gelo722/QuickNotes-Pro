@@ -11,11 +11,21 @@ function loadNotes() {
     }
 }
 
+// Загрузка заметок из бд.
+function loadNotesFromDB() {
+    fetch('/api/notes')
+        .then(r => r.json())
+        .then(data => console.log('Все заметки:', data)); // просто выводит в консоль пока что
+}
+
 
 // сохранение заметок
 function saveNotes() {
     localStorage.setItem('quickNotes', JSON.stringify(state.notes))
+    console.log(state.notes)
+    // console.log(state.notes[1])
 }
+
 
 
 // Загрузка корзины
@@ -72,4 +82,4 @@ function applyStoredTheme() {
 
 
 // export
-export { loadNotes, saveNotes, loadTrash, saveTrash, toggleTheme, applyStoredTheme }
+export { loadNotes, loadNotesFromDB, saveNotes, loadTrash, saveTrash, toggleTheme, applyStoredTheme }

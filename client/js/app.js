@@ -1,6 +1,7 @@
 // imports
 
-import { loadNotes, saveNotes, loadTrash, saveTrash, toggleTheme, applyStoredTheme } from './storage.js';
+import { loadNotes,loadNotesFromDB, saveNotes, loadTrash, saveTrash, toggleTheme, applyStoredTheme } from './storage.js';
+// loadNotesFromDB
 import { renderNotes, openNoteDialog, closeNoteDialog, closeDeleteDialog, renderTrash, toggleDropdown, handleSearchFocus, handleSearchBlur } from './ui.js';
 import { generateId } from './utils.js';
 import { state, saveNote, deleteNote, restoreNote, showDeleteDialog, deleteTrash, exportNotes, importNotes, openTrashBin, searchNotes, clearSearch } from './notes-manager.js';
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   applyStoredTheme()
   state.notes = loadNotes() //загрузка заметок
+  loadNotesFromDB() // тестовый вывод заметок из бд
   state.deletedNotes = loadTrash() //загрузка корзины
   renderNotes()
 

@@ -3,6 +3,7 @@ import { closeNoteDialog } from "./ui.js";
 import { saveNotes, saveTrash } from "./storage.js";
 import { renderNotes, renderTrash, showToast, animateTransition, updateTrashButtons } from "./ui.js"
 
+// import { router } from './notes.js';
 
 // ========== Глобальные переменные ==========
 
@@ -64,14 +65,25 @@ function saveNote() {
             }
         } else {
 
+            const newId = generateId()
+
             // Add new note       
             state.notes.unshift({
-                id: generateId(),
+                id: newId,
                 title: title,
                 content: content,
-                date: currentDate,
-                time: currentTime,
+                // date: currentDate,
+                // time: currentTime,
             })
+            
+            // Сохранение в бд.
+            fetch('/api/notes', { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify({id: newId, title: title, content: content}) }) 
+            .then(r => r.json()) 
+            .then(data => console.log('Создано:', data));
+
 
         }
 
@@ -89,6 +101,14 @@ function deleteNote(noteId) {
 
     state.notes = state.notes.filter(note => note.id != noteId) // Все заметки, кроме удаленной
     state.deletedNotes.push(removedFile) // Добавляем удаленную заметку в корзину.
+
+    // удаление из бд
+    fetch(`/api/notes/${noteId}`, { 
+            method: 'DELETE', 
+            headers: { 'Content-Type': 'application/json' }}) 
+        .then(response => {
+        console.log('Статус ответа:', response.status)})
+        .then(data => console.log('Заметка удалена:', data));
 
     saveNotes()
     saveTrash()
