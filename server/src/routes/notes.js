@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
         console.log('✅ Получено заметок:', notes.length);
         console.log('📤 Отправляю JSON ответ');
     } catch (error) {
-        res.status(500).json({ message: error.message })
+        return res.status(500).json({ message: error.message })
     }
 })
 
@@ -44,7 +44,7 @@ router.post('/', async (req, res) => {
     // Отправляем ответ клиенту
     res.status(201).json(note);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: error.message });
     }
     
 })
@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        console.log(id)
+        // console.log(id)
         const deleteNote = await db.result(
             'DELETE FROM quicknotes WHERE id = $1', [id]
         )
@@ -61,9 +61,25 @@ router.delete('/:id', async (req, res) => {
         res.json(deleteNote);
         
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: error.message });
     }
 
+})
+
+// ИЗМЕНЕНИЕ ЗАМЕТКИ
+router.put('/:id', async (req,res) => {
+    try {
+        const { id } = req.params;
+        const { title, content } = req.body;
+        const updatedNote = await db.one(
+            'UPDATE quicknotes SET (title, content) = ($2, $3) WHERE id = $1 RETURNING *', [id, title, content]
+        )
+        res.json(updatedNote)
+        console.log('✅ Заметка изменена:', updatedNote);
+    } catch (error) {
+        console.log('Что то пошло не так... :', updatedNote);
+        return res.status(500).json({ message: error.message });
+    }
 })
 
 

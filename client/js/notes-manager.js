@@ -62,7 +62,16 @@ function saveNote() {
                 content: content
                 // date
                 // time
+
             }
+
+            // Изменение заметки в бд
+            fetch(`/api/notes/${state.editingNoteId}` , {
+                method: 'PUT', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify({ title: title, content: content}) }) 
+            .then(r => r.json()) 
+            .then(data => console.log('Изменено:', data, state.editingNoteId ))
         } else {
 
             const newId = generateId()
