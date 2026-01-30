@@ -50,12 +50,56 @@ router.post('/', async (req, res) => {
 })
 
 // УДАЛЕНИЕ ЗАМЕТКИ
+// router.delete('/:id', async (req, res) => {
+//     try {
+//         const { id } = req.params;
+//         // console.log(id)
+//         const deleteNote = await db.result(
+//             'DELETE FROM quicknotes WHERE id = $1', [id]
+//         )
+//         console.log('✅ Заметка удалена из БД:', deleteNote);
+//         res.json(deleteNote);
+        
+//     } catch (error) {
+//         return res.status(500).json({ message: error.message });
+//     }
+
+// })
+
+
+// УДАЛЕНИЕ В КОРЗИНУ
 router.delete('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        // 1. Удаляем и сразу получаем данные
+        const deletedNote = await db.one(
+            'DELETE FROM quicknotes WHERE id = $1 RETURNING *', 
+            [id]
+        );
+        
+        // 2. Вставляем в корзину
+        await db.none(
+            'INSERT INTO quicknotes_trash(id, title, content) VALUES($1, $2, $3)', 
+            [deletedNote.id, deletedNote.title, deletedNote.content]
+        );
+
+        console.log('✅ Заметка удалена из БД:', deletedNote);
+        res.json(deletedNote);
+        
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+
+})
+
+
+// УДАЛЕНИЕ ЗАМЕТКИ ИЗ КОРЗИНЫ
+router.delete('/trash/:id', async (req, res) => {
     try {
         const { id } = req.params;
         // console.log(id)
         const deleteNote = await db.result(
-            'DELETE FROM quicknotes WHERE id = $1', [id]
+            'DELETE FROM quicknotes_trash WHERE id = $1', [id]
         )
         console.log('✅ Заметка удалена из БД:', deleteNote);
         res.json(deleteNote);

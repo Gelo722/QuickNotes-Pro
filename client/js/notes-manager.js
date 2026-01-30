@@ -176,6 +176,13 @@ function deleteTrash(noteId) {
 
     state.deletedNotes = state.deletedNotes.filter(note => note.id !== noteId);
 
+    fetch(`/api/notes/trash/${noteId}`, { 
+        method: 'DELETE', 
+        headers: { 'Content-Type': 'application/json' }}) 
+    .then(response => {
+    console.log('Статус ответа:', response.status)})
+    .then(data => console.log('Заметка удалена окончательно:', data));
+
     saveTrash()
     renderTrash()
 }
