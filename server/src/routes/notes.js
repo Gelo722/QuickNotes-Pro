@@ -110,6 +110,32 @@ router.delete('/trash/:id', async (req, res) => {
 
 })
 
+
+// ВОССТАНОВЛЕНИЕ ЗАМЕТКИ ИЗ КОРЗИНЫ
+router.put('/trash/:id', async (req,res) => {
+    try {
+        const { id } = req.params;
+        // удаляем из корзины
+        const restoredNote = await db.one(
+            'DELETE FROM quicknotes_trash WHERE id = $1 RETURNING *', 
+            [id]
+        );
+        // восстанавливаем в заметки
+        await db.none(
+            'INSERT INTO quicknotes(id, title, content) VALUES($1, $2, $3)', 
+            [restoredNote.id, restoredNote.title, restoredNote.content]
+        );
+
+        res.json({
+            success: true,
+            message: 'Заметка восстановлена успешно',
+            restoredNote: restoredNote
+        });
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+})
+
 // ИЗМЕНЕНИЕ ЗАМЕТКИ
 router.put('/:id', async (req,res) => {
     try {

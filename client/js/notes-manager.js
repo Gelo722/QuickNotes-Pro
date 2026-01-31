@@ -131,6 +131,14 @@ function restoreNote(noteId) {
     state.deletedNotes = state.deletedNotes.filter(note => note.id != noteId)
     state.notes.push(noteToRestore)
 
+    // БД
+    fetch(`/api/notes/trash/${noteId}`, { 
+        method: 'PUT', 
+        headers: { 'Content-Type': 'application/json' }}) 
+    .then(response => {
+    console.log('Статус ответа:', response.status)})
+    .then(data => console.log('Заметка восстановлена:', data));
+
     saveNotes()
     saveTrash()
     renderTrash()
@@ -176,6 +184,7 @@ function deleteTrash(noteId) {
 
     state.deletedNotes = state.deletedNotes.filter(note => note.id !== noteId);
 
+    // БД
     fetch(`/api/notes/trash/${noteId}`, { 
         method: 'DELETE', 
         headers: { 'Content-Type': 'application/json' }}) 
