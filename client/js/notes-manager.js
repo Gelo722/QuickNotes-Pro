@@ -86,7 +86,7 @@ function saveNote() {
             })
             
             // Сохранение в бд.
-            fetch('/api/notes', { 
+            fetch('http://localhost:3000/api/notes', { 
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' }, 
                 body: JSON.stringify({id: newId, title: title, content: content}) }) 

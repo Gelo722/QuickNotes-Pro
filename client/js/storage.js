@@ -12,10 +12,26 @@ function loadNotes() {
 }
 
 // Загрузка заметок из бд.
-function loadNotesFromDB() {
-    fetch('/api/notes')
-        .then(r => r.json())
-        .then(data => console.log('Все заметки:', data)); // просто выводит в консоль пока что
+async function loadNotesFromDB() {
+    try {
+        const response = await fetch('/api/notes');
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+        
+        const notes = await response.json(); // массив
+        console.log('✅ Загружено заметок:', notes.length);
+        console.log('✅ Заметки:', notes);
+
+        return notes;
+
+
+    } catch (error) {
+        console.error('❌ Ошибка загрузки:', error);
+        return []; // fallback
+    }
+    
 }
 
 

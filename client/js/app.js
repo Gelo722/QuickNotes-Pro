@@ -12,8 +12,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   applyStoredTheme()
-  state.notes = loadNotes() //загрузка заметок
-  loadNotesFromDB() // тестовый вывод заметок из бд
+  // state.notes = loadNotes() //загрузка заметок из localstorage
+
+  // загрузка и рендер заметок из бд.
+  loadNotesFromDB().then(notes => {
+      state.notes = notes;
+      renderNotes();
+  });
+  // await loadNotesFromDB()
   state.deletedNotes = loadTrash() //загрузка корзины
   renderNotes()
 
