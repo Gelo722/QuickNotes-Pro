@@ -37,9 +37,8 @@ async function loadNotesFromDB() {
 
 // сохранение заметок
 function saveNotes() {
-    localStorage.setItem('quickNotes', JSON.stringify(state.notes))
+    // localStorage.setItem('quickNotes', JSON.stringify(state.notes))
     console.log(state.notes)
-    // console.log(state.notes[1])
 }
 
 

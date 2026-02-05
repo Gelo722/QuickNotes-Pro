@@ -199,15 +199,30 @@ function deleteTrash(noteId) {
 
 
 // Выгрузка заметок.
-function exportNotes() {
+async function exportNotes() {
 
     if (state.notes.length === 0) {
         showToast('You need to add more notes to export.')
         return   // prevent export an empty array
     }
 
-    const savedNotes = localStorage.getItem('quickNotes')
-    const blob = new Blob([savedNotes], { type: 'text/plain' });
+    // const savedNotes = localStorage.getItem('quickNotes') // local storage
+
+    // Выгрузка из бд
+
+    const response = await fetch('/api/notes');
+    const savedNotes = await response.json();
+    // await response.then(notes => {
+    //   savedNotes = notes;
+    // });
+    // const savedNotes = response;
+    console.log('savedNotes', savedNotes )
+
+    // const savedNotes = response.json();
+
+    // const blob = new Blob([savedNotes], { type: 'text/plain' }); // для localstorage
+
+    const blob = new Blob([JSON.stringify(savedNotes, null,2)], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -241,14 +256,25 @@ async function importNotes() {
         const importedNotes = JSON.parse(reader.result);
         const existingIds = state.notes.map(note => note.id);
 
-        for (const importedNote of importedNotes) {
-            // Проверка существующих id
-            if (existingIds.includes(importedNote.id)) {
-                importedNote.id = generateId(); // Генерируем новый id
+        importedNotes.forEach(note => {
+            if (existingIds.includes(note.id)) {
+                note.id = generateId(); // Генерируем новый id
             }
-            state.notes.push(importedNote)
-        }
 
+            state.notes.push(note)
+
+            // Сохранение в бд.
+            fetch('http://localhost:3000/api/notes', { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify({id: note.id, title: note.title, content: note.content}) }) 
+            .then(r => r.json()) 
+            .then(data => console.log('Создано:', data));
+
+            console.log('importedNote:', note)
+        });
+
+        
         saveNotes()
         renderNotes()
 
