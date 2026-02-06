@@ -317,10 +317,15 @@ function openTrashBin() {
 
 
 // Поиск по заметкам
-function searchNotes() {
+async function searchNotes() {
 
     let inputValue = document.getElementById('searchField').value.trim();
-    let tempNotes = JSON.parse(localStorage.getItem('quickNotes')) || [];
+    // let tempNotes = JSON.parse(localStorage.getItem('quickNotes')) || []; // поиск по local Storage
+
+    // Поиск по бд
+    const response = await fetch('/api/notes');
+    let tempNotes = await response.json();
+
 
     if (inputValue === '') {
         // Если поиск пустой, показываем все заметки
