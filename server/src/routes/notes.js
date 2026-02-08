@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-
+// сохранение заметки
 router.post('/', async (req, res) => {
 
     
@@ -48,6 +48,7 @@ router.post('/', async (req, res) => {
     }
     
 })
+
 
 // УДАЛЕНИЕ ЗАМЕТКИ
 // router.delete('/:id', async (req, res) => {
