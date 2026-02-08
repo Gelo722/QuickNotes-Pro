@@ -13,8 +13,8 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(appRoot, 'client', 'index.html'));
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+app.listen(port, 'localhost', () => {
+  console.log(`\x1b[32m[ONLINE]\x1b[0m Example app listening at http://localhost:${port}`)
 })
 
 app.use(express.json()); // для парсинга JSON

@@ -13,11 +13,11 @@ const db = pgp({
 // Проверка подключения
 db.connect()
     .then(obj => {
-        console.log('✅ PostgreSQL подключена успешно');
+        console.log('\x1b[32m[OK]\x1b[0m PostgreSQL подключена успешно');
         obj.done(); // закрываем соединение для проверки
     })
     .catch(error => {
-        console.log('❌ Ошибка подключения к PostgreSQL:', error.message);
+        console.log('\x1b[31m[ERROR]\x1b[0m Ошибка подключения к PostgreSQL:', error.message);
     });
 
 module.exports = db;
